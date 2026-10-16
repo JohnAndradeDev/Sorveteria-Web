@@ -1,0 +1,241 @@
+/* ===== Cores: variáveis do tema claro ===== */
+:root {
+  --fundo: #f1faf5;
+  --texto: #2b1b3d;
+  --card: #ffffff;
+  --rosa: #ff5c8a;
+  --limao: #ffe66d;
+  --borda: #2b1b3d;
+}
+/* Tema escuro: o JS liga a classe "dark" no body */
+body.dark {
+  --fundo: #1f1430;
+  --texto: #f4ecff;
+  --card: #2d1f44;
+  --rosa: #ff7fa5;
+  --limao: #ffe66d;
+  --borda: #f4ecff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", system-ui, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  line-height: 1.55;
+}
+
+a {
+  color: inherit;
+}
+
+/* Cabeçalho fixo */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.8rem 1.25rem;
+  background: var(--limao);
+  color: #2b1b3d;
+  border-bottom: 3px solid #2b1b3d;
+}
+.logo {
+  font-weight: 900;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+.topo nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+/* Hero: o título grande é o elemento de destaque da página */
+.hero {
+  padding: 3rem 0 2rem;
+  min-height: 18rem;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 8vw, 4.5rem);
+  line-height: 1.05;
+  margin: 0 0 1rem;
+  color: var(--rosa);
+}
+.hero p {
+  max-width: 36rem;
+  font-size: 1.1rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin: 2rem 0 1rem;
+}
+
+/* Botões de filtro */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.filtros button.ativo {
+  background: var(--rosa);
+  color: #fff;
+}
+
+/* Grade responsiva de cartões */
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+}
+.sabor {
+  background: var(--card);
+  border: 2px solid var(--borda);
+  border-radius: 14px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.sabor h3 {
+  margin: 0;
+}
+.sabor .preco {
+  font-weight: 700;
+}
+.sabor .acoes {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+/* Botões em geral */
+button {
+  font: inherit;
+  padding: 0.5rem 0.9rem;
+  border: 2px solid var(--borda);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--texto);
+  cursor: pointer;
+}
+button:hover {
+  background: var(--limao);
+  color: #2b1b3d;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--rosa);
+  outline-offset: 2px;
+}
+
+/* Pedido */
+.pedido {
+  background: var(--card);
+  border: 2px solid var(--borda);
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin-top: 2.5rem;
+}
+#itens-pedido {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+#itens-pedido li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed var(--borda);
+}
+.vazio {
+  opacity: 0.7;
+}
+.linha {
+  display: flex;
+  gap: 0.5rem;
+}
+input {
+  flex: 1;
+  padding: 0.5rem 0.8rem;
+  border: 2px solid var(--borda);
+  border-radius: 999px;
+  background: var(--fundo);
+  color: var(--texto);
+  font: inherit;
+}
+label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.total {
+  font-size: 1.3rem;
+}
+.ok {
+  color: #1c8a4a;
+  font-weight: 700;
+}
+.erro {
+  color: #d6336c;
+  font-weight: 700;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.modal-caixa {
+  background: var(--card);
+  border: 2px solid var(--borda);
+  border-radius: 14px;
+  padding: 1.5rem;
+  width: min(380px, 90%);
+}
+
+/* Voltar ao topo */
+#topo-btn {
+  display: none;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 480px) {
+  .topo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

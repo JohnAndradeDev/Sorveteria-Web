@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gelato Rua 9: sorvetes artesanais</title>
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Cabeçalho com logo, atalho para o pedido e botão de tema -->
+  <header class="topo">
+    <a class="logo" href="#">Gelato Rua 9</a>
+    <nav>
+      <a href="#cardapio">Cardápio</a>
+      <a href="#pedido">Meu pedido (<span id="qtd-carrinho">0</span>)</a>
+      <button id="toggle-dark" type="button">Tema</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero: a frase é digitada pelo script (efeito typewriter) -->
+    <section class="hero">
+      <h1 id="typewriter" aria-live="polite"></h1>
+      <p>Sorvetes feitos todo dia, em pequenos lotes. Monte seu pedido abaixo.</p>
+    </section>
+
+    <!-- Cardápio: os botões de filtro e os cartões são criados pelo JS -->
+    <section id="cardapio">
+      <h2>Cardápio</h2>
+      <div id="filtros" class="filtros"></div>
+      <div id="lista-sabores" class="grade"></div>
+    </section>
+
+    <!-- Pedido: itens, cupom e total -->
+    <section id="pedido" class="pedido">
+      <h2>Meu pedido</h2>
+      <ul id="itens-pedido"></ul>
+      <label for="cupom">Cupom de desconto</label>
+      <div class="linha">
+        <input id="cupom" type="text" placeholder="Ex.: DOCE10">
+        <button id="aplicar-cupom" type="button">Aplicar</button>
+      </div>
+      <p id="msg-cupom"></p>
+      <p class="total">Total: <strong id="total">R$ 0,00</strong></p>
+      <button id="finalizar" type="button">Finalizar pedido</button>
+    </section>
+  </main>
+
+  <!-- Modal de detalhes (preenchido pelo JS) -->
+  <div id="modal" class="modal">
+    <div class="modal-caixa" role="dialog" aria-modal="true">
+      <h3 id="modal-titulo"></h3>
+      <p id="modal-texto"></p>
+      <button id="fechar-modal" type="button">Fechar</button>
+    </div>
+  </div>
+
+  <button id="topo-btn" type="button" aria-label="Voltar ao topo">↑</button>
+  <footer>
+    <p>Gelato Rua 9. Site de exemplo.</p>
+  </footer>
+
+  <!-- JS externo no fim do body -->
+  <script src="script.js"></script>
+</body>
+
+</html>
