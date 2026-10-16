@@ -6,6 +6,9 @@
   --rosa: #e11a45;
   --limao: #edc92c;
   --borda: #2b1b3d;
+  --sobre-rosa: #ffffff; /* texto sobre fundo rosa (contraste ok) */
+  --ok: #14703b;
+  --erro: #b4234f;
 }
 
 /* Tema escuro: o JS liga a classe "dark" no body */
@@ -16,12 +19,17 @@ body.dark {
   --rosa: #ff7fa5;
   --limao: #ffe66d;
   --borda: #f4ecff;
+  --sobre-rosa: #2d1f44;
+  --ok: #6ee7a0;
+  --erro: #ff9db8;
 }
 
+/* Reset: largura inclui borda e padding */
 * {
   box-sizing: border-box;
 }
 
+/* Base da página */
 body {
   margin: 0;
   font-family: "Trebuchet MS", system-ui, sans-serif;
@@ -30,6 +38,7 @@ body {
   line-height: 1.55;
 }
 
+/* Links herdam a cor do texto */
 a {
   color: inherit;
 }
@@ -49,6 +58,7 @@ a {
   color: #2b1b3d;
   border-bottom: 3px solid #2b1b3d;
 }
+/* Logo e menu do cabeçalho */
 .logo {
   font-weight: 900;
   font-size: 1.3rem;
@@ -60,6 +70,7 @@ a {
   gap: 1rem;
 }
 
+/* Coluna central (a largura cresce nos breakpoints abaixo) */
 main {
   max-width: 900px;
   margin: 0 auto;
@@ -82,6 +93,7 @@ main {
   font-size: 1.1rem;
 }
 
+/* Títulos de seção */
 h2 {
   font-size: 1.6rem;
   margin: 2rem 0 1rem;
@@ -96,7 +108,7 @@ h2 {
 }
 .filtros button.ativo {
   background: var(--rosa);
-  color: #fff;
+  color: var(--sobre-rosa);
 }
 
 /* Grade responsiva de cartões */
@@ -105,6 +117,7 @@ h2 {
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 1rem;
 }
+/* Cartão de sabor do cardápio */
 .sabor {
   background: var(--card);
   border: 2px solid var(--borda);
@@ -167,6 +180,7 @@ input:focus-visible {
   padding: 0.4rem 0;
   border-bottom: 1px dashed var(--borda);
 }
+/* Mensagem de lista vazia */
 .vazio {
   opacity: 0.7;
 }
@@ -174,6 +188,7 @@ input:focus-visible {
   display: flex;
   gap: 0.5rem;
 }
+/* Campos de texto */
 input {
   flex: 1;
   padding: 0.5rem 0.8rem;
@@ -190,12 +205,13 @@ label {
 .total {
   font-size: 1.3rem;
 }
+/* Cores de feedback (variáveis ajustadas para cada tema) */
 .ok {
-  color: #1c8a4a;
+  color: var(--ok);
   font-weight: 700;
 }
 .erro {
-  color: #d6336c;
+  color: var(--erro);
   font-weight: 700;
 }
 
@@ -319,7 +335,7 @@ h3,
   }
   .filtros button.ativo:hover {
     background: var(--rosa);
-    color: #fff;
+    color: var(--sobre-rosa);
   }
 }
 
@@ -491,6 +507,7 @@ main > section {
 .topo button {
   --borda: #2b1b3d;
 }
+/* Link de acessibilidade: só aparece ao receber foco */
 .pular-conteudo {
   position: fixed;
   top: -10rem;
@@ -502,6 +519,7 @@ main > section {
 .pular-conteudo:focus {
   top: 1rem;
 }
+/* Grupos de botões e lista de diferenciais */
 .hero-acoes,
 .contato-acoes,
 .hero-diferenciais {
@@ -513,6 +531,7 @@ main > section {
   padding: 0;
   list-style: none;
 }
+/* Botão em forma de link (.botao) e sua versão secundária */
 .botao {
   display: inline-flex;
   align-items: center;
@@ -522,7 +541,7 @@ main > section {
   border: 2px solid var(--borda);
   border-radius: 999px;
   background: var(--rosa);
-  color: var(--card);
+  color: var(--sobre-rosa);
   text-decoration: none;
   font-weight: 700;
 }
@@ -530,6 +549,7 @@ main > section {
   background: var(--card);
   color: var(--texto);
 }
+/* Cartões reutilizados em várias seções */
 .painel,
 .destaque,
 .info-card,
@@ -545,6 +565,7 @@ main > section {
 .destaque h3 {
   margin-block: 0.5rem;
 }
+/* Ícone redondo e etiquetas */
 .icone {
   display: inline-grid;
   place-items: center;
@@ -569,6 +590,7 @@ main > section {
   background: var(--limao);
   color: #2b1b3d;
 }
+/* Números da seção Sobre */
 .sobre-numeros {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -589,6 +611,7 @@ main > section {
   color: var(--rosa);
   font-size: 2rem;
 }
+/* Busca e ordenação do cardápio */
 .ferramentas-cardapio {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
@@ -603,6 +626,7 @@ main > section {
 .campo select {
   width: 100%;
 }
+/* Caixa de seleção "Somente favoritos" */
 .checkbox {
   display: flex;
   align-items: center;
@@ -616,6 +640,7 @@ main > section {
   accent-color: var(--rosa);
 }
 input,
+/* Selects e áreas de texto */
 select,
 textarea {
   min-width: 0;
@@ -646,6 +671,7 @@ textarea:focus-visible {
   outline: 3px solid var(--rosa);
   outline-offset: 3px;
 }
+/* Ações do cartão: favorito e botões */
 .sabor .acoes {
   flex-wrap: wrap;
 }
@@ -654,17 +680,19 @@ textarea:focus-visible {
 }
 .sabor .favorito[aria-pressed="true"] {
   background: var(--rosa);
-  color: var(--card);
+  color: var(--sobre-rosa);
 }
 #itens-pedido li {
   flex-wrap: wrap;
 }
+/* Controles + e − do pedido */
 .quantidade {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
+/* Grupo "Como deseja receber?" */
 fieldset {
   min-width: 0;
   margin: 1.5rem 0;
@@ -672,6 +700,7 @@ fieldset {
   border: 1px solid var(--borda);
   border-radius: 12px;
 }
+/* Linhas do resumo de valores */
 .resumo-valores > div {
   display: flex;
   justify-content: space-between;
@@ -682,6 +711,7 @@ fieldset {
 .resumo-valores dd {
   margin: 0;
 }
+/* Perguntas frequentes */
 .faq details {
   padding: 1rem;
   margin-bottom: 0.75rem;
@@ -693,6 +723,7 @@ fieldset {
   cursor: pointer;
   font-weight: 700;
 }
+/* Ajustes do modal (dvh evita erro com a barra do navegador móvel) */
 .modal {
   padding: 1rem;
 }
@@ -708,6 +739,7 @@ fieldset {
 body.modal-aberto {
   overflow: hidden;
 }
+/* Aviso flutuante */
 .notificacao {
   position: fixed;
   bottom: max(1rem, env(safe-area-inset-bottom));
@@ -726,10 +758,12 @@ body.modal-aberto {
 .notificacao:empty {
   display: none;
 }
+/* Botões desativados */
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
+/* Celulares e tablets pequenos: menu recolhível */
 @media (max-width: 767px) {
   .topo {
     align-items: stretch;
@@ -775,6 +809,7 @@ button:disabled {
     padding-inline: max(0.75rem, env(safe-area-inset-left));
   }
 }
+/* Telas muito estreitas */
 @media (max-width: 320px) {
   .logo {
     font-size: 1rem;
@@ -798,6 +833,7 @@ button:disabled {
     transition: none !important;
   }
 }
+/* Impressão: esconde controles interativos */
 @media print {
   .aviso-demo,
   .contato-acoes,
@@ -816,4 +852,19 @@ button:disabled {
 
 a {
   text-decoration: none;
+}
+
+/* O <footer> dentro de um depoimento é só a assinatura, não o rodapé da página */
+.depoimento footer {
+  padding: 0;
+  text-align: left;
+  font-size: 0.9rem;
+}
+.depoimento p {
+  margin-top: 0;
+}
+
+/* Foco programático no título do pedido sem contorno extra */
+h2[tabindex="-1"]:focus {
+  outline: none;
 }

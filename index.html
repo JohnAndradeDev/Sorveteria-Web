@@ -3,16 +3,22 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="Gelato Rua 9: sorveteria artesanal fictícia com cardápio, busca e simulação de pedido.">
+  <!-- Ajusta a página à largura do celular; viewport-fit respeita o "notch" -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Gelato Rua 9: sorvetes artesanais</title>
+  <!-- CSS externo: toda a aparência fica em style.css -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <!-- Acessibilidade: quem usa teclado pula o menu com este link -->
   <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+  <!-- CABEÇALHO: logo, menu de navegação e botão de tema -->
   <header class="topo">
     <a class="logo" href="#">Gelato Rua 9</a>
 
+    <!-- Botão do menu para celulares (o JS mostra e esconde) -->
     <button id="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" hidden>Menu</button>
     <nav id="menu-principal" aria-label="Navegação principal">
       <a href="#sobre">Sobre</a>
@@ -23,7 +29,9 @@
     </nav>
   </header>
 
+  <!-- CONTEÚDO PRINCIPAL (o JS o desativa enquanto o modal está aberto) -->
   <main id="conteudo">
+    <!-- HERO: título digitado pelo JS, botões de ação e diferenciais -->
     <section class="hero">
       <h1 id="typewriter">Sorvete bom é sorvete de verdade.</h1>
       <p>Sorvetes feitos todo dia, em pequenos lotes. Monte seu pedido abaixo.</p>
@@ -40,6 +48,7 @@
       </ul>
     </section>
 
+    <!-- SOBRE: apresentação da marca; os números são preenchidos pelo JS -->
     <section id="sobre" class="sobre">
       <h2>Sobre a Gelato Rua 9</h2>
 
@@ -59,7 +68,7 @@
 
       <div class="sobre-numeros">
         <div>
-          <strong>12</strong>
+          <strong id="num-sabores">12</strong>
           <span>sabores no cardápio</span>
         </div>
         <div>
@@ -67,19 +76,20 @@
           <span>produção artesanal</span>
         </div>
         <div>
-          <strong>3</strong>
+          <strong id="num-categorias">3</strong>
           <span>categorias de sabores</span>
         </div>
       </div>
     </section>
 
+    <!-- DESTAQUES: três sabores em cartões estáticos -->
     <section id="destaques" class="destaques">
       <h2>Destaques da semana</h2>
 
       <div class="grade destaques-grade">
         <article class="destaque">
-          <h3>Pistache Cremoso</h3>
-          <p>Base italiana cremosa com pasta de pistache e pedaços crocantes.</p>
+          <h3>Pistache salgado</h3>
+          <p>Pistache torrado com uma pitada de sal marinho.</p>
           <span class="tag">Mais pedido</span>
         </article>
 
@@ -92,11 +102,12 @@
         <article class="destaque">
           <h3>Manga com gengibre</h3>
           <p>Manga madura com um toque de gengibre.</p>
-          <span class="tag">Sem lactose</span>
+          <span class="tag">Refrescante</span>
         </article>
       </div>
     </section>
 
+    <!-- COMO FUNCIONA: passos do pedido -->
     <section id="como-funciona" class="secao-editorial" aria-labelledby="titulo-como-funciona">
       <h2 id="titulo-como-funciona">Seu pedido em quatro passos</h2>
       <p>Explore o cardápio e monte uma combinação do seu jeito.</p>
@@ -136,6 +147,7 @@
       </div>
     </section>
 
+    <!-- CARDÁPIO: busca, ordenação, favoritos e cartões criados pelo JS -->
     <section id="cardapio">
       <h2>Cardápio</h2>
       <p class="descricao-secao">
@@ -165,6 +177,7 @@
       <div id="lista-sabores" class="grade"></div>
     </section>
 
+    <!-- EXPERIÊNCIAS: sugestões de sabor por ocasião -->
     <section id="experiencias" class="secao-editorial" aria-labelledby="titulo-experiencias">
       <h2 id="titulo-experiencias">Uma pausa para cada momento</h2>
       <p>Ideias para aproveitar sabores diferentes, sem alterar seu pedido automaticamente.</p>
@@ -204,6 +217,7 @@
       </div>
     </section>
 
+    <!-- PROCESSO: conteúdo ilustrativo sobre a produção -->
     <section id="processo" class="secao-editorial" aria-labelledby="titulo-processo">
       <h2 id="titulo-processo">Da ideia à vitrine</h2>
       <p>Uma história ilustrativa de como seria nossa produção artesanal.</p>
@@ -243,6 +257,7 @@
       </div>
     </section>
 
+    <!-- GUIA: perfil de cada categoria de sabor -->
     <section id="guia" class="secao-editorial" aria-labelledby="titulo-guia">
       <h2 id="titulo-guia">Guia para escolher seu sabor</h2>
       <p>Compare os perfis apresentados no cardápio.</p>
@@ -282,6 +297,7 @@
       </div>
     </section>
 
+    <!-- OCASIÕES: ideias para compartilhar -->
     <section id="ocasioes" class="secao-editorial" aria-labelledby="titulo-ocasioes">
       <h2 id="titulo-ocasioes">Ideias para compartilhar</h2>
       <p>Inspirações para uma futura operação real da gelateria.</p>
@@ -321,6 +337,7 @@
       </div>
     </section>
 
+    <!-- DEPOIMENTOS: textos fictícios em <blockquote> -->
     <section id="depoimentos" class="depoimentos">
       <h2>Depoimentos ilustrativos</h2>
       <p>Textos fictícios para demonstrar a apresentação de avaliações.</p>
@@ -343,8 +360,9 @@
       </div>
     </section>
 
+    <!-- PEDIDO: itens, modalidade, observações, cupom e total (atualizados pelo JS) -->
     <section id="pedido" class="pedido">
-      <h2>Meu pedido</h2>
+      <h2 id="pedido-titulo" tabindex="-1">Meu pedido</h2>
 
       <p>Simule seu pedido. Os dados ficam apenas neste navegador.</p>
       <ul id="itens-pedido"></ul>
@@ -395,6 +413,7 @@
       <button id="copiar-pedido" type="button">Copiar resumo</button>
     </section>
 
+    <!-- INFORMAÇÕES: horário, endereço e formas de pagamento -->
     <section id="informacoes" class="informacoes">
       <h2>Horários e localização</h2>
 
@@ -419,6 +438,7 @@
       </div>
     </section>
 
+    <!-- FAQ: perguntas e respostas com <details>, sem JavaScript -->
     <section id="faq" class="faq">
       <h2>Perguntas frequentes</h2>
 
@@ -429,7 +449,7 @@
 
       <details>
         <summary>Posso retirar meu pedido na loja?</summary>
-        <p>Sim. Após finalizar o pedido, você pode retirar no balcão durante o horário de funcionamento.</p>
+        <p>Na simulação, a retirada não tem frete. Em uma loja real, o pedido seria retirado no balcão durante o horário de funcionamento.</p>
       </details>
 
       <details>
@@ -491,27 +511,31 @@
         </p>
       </details>
     </section>
+    <!-- CONTATO: links de exemplo a substituir -->
     <section id="contato" class="contato">
       <h2>Fale com a gente</h2>
 
       <p>
-        Tem alguma dúvida, sugestão de sabor ou quer encomendar para uma festa?
-        Envie uma mensagem pelo WhatsApp ou siga a Gelato Rua 9 nas redes sociais.
+        Tem alguma dúvida ou sugestão de sabor? Em uma loja real, aqui ficariam os links
+        de WhatsApp e redes sociais.
       </p>
 
       <p>Contatos de exemplo: substitua pelos canais reais antes de publicar.</p>
       <div class="contato-acoes">
-        <a class="botao" href="#" target="_blank" rel="noopener">
+        <!-- TROCAR por https://wa.me/55DDDNUMERO e adicionar target="_blank" rel="noopener" -->
+        <a class="botao" href="#contato">
           WhatsApp
         </a>
 
-        <a class="botao botao-secundario" href="#" target="_blank" rel="noopener">
+        <!-- TROCAR pelo link real do Instagram -->
+        <a class="botao botao-secundario" href="#contato">
           Instagram
         </a>
       </div>
     </section>
   </main>
 
+  <!-- MODAL: uma única janela reutilizada para detalhes e resumo do pedido -->
   <div id="modal" class="modal" hidden>
     <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-texto" tabindex="-1">
       <h3 id="modal-titulo"></h3>
@@ -520,14 +544,18 @@
     </div>
   </div>
 
+  <!-- Botão "voltar ao topo", exibido pelo JS após rolar 300 px -->
   <button id="topo-btn" type="button" aria-label="Voltar ao topo">↑</button>
 
+  <!-- RODAPÉ -->
   <footer>
     <p>Gelato Rua 9.</p>
     <p>Feito com carinho em Sertãozinho, SP.</p>
   </footer>
 
+  <!-- Avisos curtos, lidos por leitores de tela (aria-live) -->
   <div id="notificacao" class="notificacao" role="status" aria-live="polite"></div>
+  <!-- JS externo no fim do body, para o HTML já existir quando o script rodar -->
   <script src="script.js"></script>
 </body>
 

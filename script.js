@@ -71,20 +71,24 @@ sabores.push(
   { id: 12, nome: "Brownie", categoria: "Especiais", preco: 16, desc: "Chocolate com pedaços de brownie. Receita ilustrativa com leite, ovos e glúten." }
 );
 
+// Utilitários: $ busca por id; moeda formata em R$; normalizar tira acentos (busca)
 const $ = (id) => document.getElementById(id);
 const chave = "gelato-rua9-v2";
 const moeda = (valor) => valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 const normalizar = (texto) => texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+// ESTADO da página: tudo que muda com o uso fica nestas variáveis
 let carrinho = [];
 let favoritos = [];
 let desconto = 0;
 let filtroAtual = "Todos";
 let temporizadorAviso;
 let focoAnterior;
+// Consultas de mídia: menos movimento e tela pequena
 const reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)");
 const telaPequena = window.matchMedia("(max-width: 767px)");
 
 // Armazenamento indisponível não impede a utilização da página.
+// Lê carrinho, favoritos e tema do localStorage, validando cada item
 function carregarEstado() {
   try {
     const salvo = JSON.parse(localStorage.getItem(chave) || "{}");
@@ -102,13 +106,16 @@ function carregarEstado() {
     if (Array.isArray(salvo.favoritos)) {
       favoritos = [...new Set(salvo.favoritos)].filter((id) => sabores.some((s) => s.id === id));
     }
-    document.body.classList.toggle("dark", salvo.escuro === true);
+    // Sem preferência salva, segue o tema do sistema
+    const preferido = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.body.classList.toggle("dark", typeof salvo.escuro === "boolean" ? salvo.escuro : preferido);
   } catch {
     carrinho = [];
     favoritos = [];
   }
 }
 
+// Grava o estado no localStorage (chamado a cada mudança)
 function salvarEstado() {
   try {
     localStorage.setItem(chave, JSON.stringify({
@@ -121,6 +128,7 @@ function salvarEstado() {
   }
 }
 
+// Mostra uma mensagem curta e a apaga após 3,5 s
 function avisar(mensagem) {
   clearTimeout(temporizadorAviso);
   $("notificacao").textContent = mensagem;
@@ -129,6 +137,7 @@ function avisar(mensagem) {
   }, 3500);
 }
 
+// Cria um <button> com texto, ação de clique e rótulo acessível opcional
 function criarBotao(texto, acao, rotulo) {
   const botao = document.createElement("button");
   botao.type = "button";
@@ -139,6 +148,7 @@ function criarBotao(texto, acao, rotulo) {
 }
 
 // Busca, categoria, favoritos e ordenação são combinados.
+// Aplica busca, categoria e favoritos com filter e depois ordena com sort
 function listaFiltrada() {
   const busca = normalizar($("busca").value.trim());
   const lista = sabores.filter((sabor) => {
@@ -154,6 +164,7 @@ function listaFiltrada() {
   return lista;
 }
 
+// Cria os botões de categoria a partir dos sabores, sem repetir
 function desenharFiltros() {
   const categorias = ["Todos", ...new Set(sabores.map((s) => s.categoria))];
   $("filtros").replaceChildren();
@@ -173,6 +184,7 @@ function desenharFiltros() {
   });
 }
 
+// Redesenha os cartões do cardápio conforme os filtros ativos
 function desenharSabores() {
   const grade = $("lista-sabores");
   grade.replaceChildren();
@@ -215,6 +227,7 @@ function desenharSabores() {
   });
 }
 
+// Adiciona ou remove um sabor dos favoritos
 function alternarFavorito(id) {
   favoritos = favoritos.includes(id) ? favoritos.filter((item) => item !== id) : [...favoritos, id];
   salvarEstado();
@@ -222,6 +235,7 @@ function alternarFavorito(id) {
   avisar(favoritos.includes(id) ? "Sabor salvo nos favoritos." : "Sabor removido dos favoritos.");
 }
 
+// Coloca um sabor no carrinho ou soma 1 à quantidade (máximo 99)
 function adicionar(id) {
   const item = carrinho.find((atual) => atual.id === id);
   if (item && item.qtd >= 99) {
@@ -234,6 +248,7 @@ function adicionar(id) {
   avisar("Sabor adicionado ao pedido.");
 }
 
+// Botões + e − do pedido; quantidade zero remove o item
 function alterarQuantidade(id, diferenca) {
   const item = carrinho.find((atual) => atual.id === id);
   if (!item) return;
@@ -241,9 +256,10 @@ function alterarQuantidade(id, diferenca) {
   carrinho = carrinho.filter((atual) => atual.qtd > 0);
   atualizarPedido();
   const controle = $("itens-pedido").querySelector(`[data-controle="${id}"]`);
-  (controle || $("limpar-carrinho")).focus();
+  (controle || $("pedido-titulo")).focus();
 }
 
+// Calcula subtotal, desconto, frete (grátis a partir de R$ 40) e total
 function calcularTotais() {
   const subtotal = carrinho.reduce((soma, item) => {
     return soma + sabores.find((s) => s.id === item.id).preco * item.qtd;
@@ -253,6 +269,7 @@ function calcularTotais() {
   return { subtotal, abatimento, frete, total: subtotal - abatimento + frete };
 }
 
+// Redesenha a lista e os valores do pedido, ajusta botões e salva o estado
 function atualizarPedido() {
   const lista = $("itens-pedido");
   lista.replaceChildren();
@@ -289,6 +306,7 @@ function atualizarPedido() {
   salvarEstado();
 }
 
+// Valida o cupom: apenas DOCE10 (10% nos produtos)
 function aplicarCupom() {
   const codigo = $("cupom").value.trim().toUpperCase();
   desconto = codigo === "DOCE10" ? 0.1 : 0;
@@ -297,6 +315,7 @@ function aplicarCupom() {
   atualizarPedido();
 }
 
+// Monta o texto do resumo exibido no modal e copiado ao clicar em Copiar
 function resumoPedido() {
   const valores = calcularTotais();
   const linhas = ["GELATO RUA 9 — SIMULAÇÃO", ""];
@@ -331,6 +350,7 @@ function abrirModal(titulo, texto) {
   $("fechar-modal").focus();
 }
 
+// Fecha o modal, reativa a página e devolve o foco ao botão anterior
 function fecharModal() {
   if ($("modal").hidden) return;
   $("modal").hidden = true;
@@ -341,6 +361,7 @@ function fecharModal() {
   focoAnterior?.focus();
 }
 
+// Em telas pequenas mostra o botão Menu e esconde os links
 function atualizarMenu() {
   const pequeno = telaPequena.matches;
   $("menu-toggle").hidden = !pequeno;
@@ -348,12 +369,14 @@ function atualizarMenu() {
   $("menu-principal").hidden = pequeno;
 }
 
+// Atualiza o texto e o aria-pressed do botão de tema
 function atualizarRotuloTema() {
   const escuro = document.body.classList.contains("dark");
   $("toggle-dark").textContent = escuro ? "Tema claro" : "Tema escuro";
   $("toggle-dark").setAttribute("aria-pressed", String(escuro));
 }
 
+// Efeito de digitação no título (desligado para quem prefere menos movimento)
 function iniciarDigitacao() {
   const frase = "Sorvete bom é sorvete de verdade.";
   if (reduzirMovimento.matches) return;
@@ -384,6 +407,7 @@ $("cupom").addEventListener("keydown", (evento) => {
 $("observacoes").addEventListener("input", () => {
   $("contador-observacoes").textContent = `${$("observacoes").value.length}/300 caracteres`;
 });
+// Esvazia o carrinho (com confirmação) e zera o cupom
 $("limpar-carrinho").addEventListener("click", () => {
   if (!window.confirm("Esvaziar o carrinho desta simulação?")) return;
   carrinho = [];
@@ -393,9 +417,11 @@ $("limpar-carrinho").addEventListener("click", () => {
   atualizarPedido();
   avisar("Carrinho esvaziado.");
 });
+// Gera o resumo da simulação no modal
 $("finalizar").addEventListener("click", () => {
   if (carrinho.length) abrirModal("Resumo da simulação", resumoPedido());
 });
+// Copia o resumo; se o navegador negar, mostra o texto no modal
 $("copiar-pedido").addEventListener("click", async () => {
   if (!carrinho.length) return;
   try {
@@ -409,6 +435,7 @@ $("fechar-modal").addEventListener("click", fecharModal);
 $("modal").addEventListener("click", (evento) => {
   if (evento.target === $("modal")) fecharModal();
 });
+// Teclado no modal: Esc fecha e Tab fica preso no botão Fechar
 document.addEventListener("keydown", (evento) => {
   if ($("modal").hidden) return;
   if (evento.key === "Escape") fecharModal();
@@ -417,11 +444,13 @@ document.addEventListener("keydown", (evento) => {
     $("fechar-modal").focus();
   }
 });
+// Alterna o tema escuro e salva a escolha
 $("toggle-dark").addEventListener("click", () => {
   document.body.classList.toggle("dark");
   atualizarRotuloTema();
   salvarEstado();
 });
+// Abre e fecha o menu no celular
 $("menu-toggle").addEventListener("click", () => {
   const aberto = $("menu-toggle").getAttribute("aria-expanded") === "true";
   $("menu-toggle").setAttribute("aria-expanded", String(!aberto));
@@ -431,10 +460,12 @@ $("menu-principal").addEventListener("click", (evento) => {
   if (telaPequena.matches && evento.target.closest("a")) atualizarMenu();
 });
 telaPequena.addEventListener("change", atualizarMenu);
+// Mostra o botão de topo só depois de 300 px de rolagem
 function atualizarTopo() {
   $("topo-btn").style.display = window.scrollY > 300 ? "block" : "none";
 }
 window.addEventListener("scroll", atualizarTopo, { passive: true });
+// Volta ao início da página (sem animação para quem prefere menos movimento)
 $("topo-btn").addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: reduzirMovimento.matches ? "instant" : "smooth" });
 });
@@ -447,4 +478,7 @@ desenharFiltros();
 desenharSabores();
 atualizarPedido();
 atualizarTopo();
+// Números da seção "Sobre" calculados a partir dos dados
+$("num-sabores").textContent = sabores.length;
+$("num-categorias").textContent = new Set(sabores.map((s) => s.categoria)).size;
 iniciarDigitacao();

@@ -2,7 +2,8 @@
 
 Site de uma sorveteria artesanal fictícia, feito com HTML, CSS e JavaScript puros.
 O visitante vê o cardápio, filtra por categoria, monta um pedido, aplica um cupom
-e finaliza a compra. Não há servidor nem bibliotecas: tudo roda no navegador.
+e finaliza a compra. Não há servidor nem bibliotecas: tudo roda no navegador. Endereço, contatos e
+depoimentos são fictícios e precisam ser trocados antes de uma publicação real.
 
 Projeto desenvolvido para a disciplina de Web Design (Facens), usando os conceitos
 da aula de JavaScript: sintaxe, variáveis, operadores, condicionais, repetições,
@@ -55,14 +56,15 @@ sorveteria/
 ### 3.1 Efeito de digitação
 
 O título da página é escrito letra por letra. A função `digitar()` acrescenta um
-caractere com `charAt` e se chama de novo com `setTimeout` a cada 70 ms, até
-chegar ao fim da frase.
+caractere com `charAt` e se chama de novo com `setTimeout` a cada 55 ms, até
+chegar ao fim da frase. Para quem prefere menos movimento, o texto aparece pronto.
 
 ### 3.2 Cardápio gerado pelo JavaScript
 
 Os sabores ficam em um array de objetos. A função `desenharSabores()` percorre o
 array com `forEach` e, para cada sabor, cria um `<article>` com `createElement`,
-preenche o conteúdo com template string e o coloca na página com `appendChild`.
+preenche título, descrição e botões com `textContent` (mais seguro que `innerHTML`)
+e coloca o cartão na página com `append`.
 
 ### 3.3 Filtro por categoria
 
@@ -88,12 +90,13 @@ O campo aceita o código `DOCE10`, que dá 10% de desconto. O texto é limpo com
 funciona. Há três respostas possíveis: cupom válido, campo vazio e cupom inválido,
 cada uma com uma mensagem e uma cor diferentes.
 
-### 3.6 Finalizar pedido
+### 3.6 Resumo da simulação
 
-- Com o carrinho vazio, mostra um aviso (`alert`).
-- Com itens, pede confirmação com o total (`confirm`).
-- Se o visitante confirmar, o carrinho, o desconto e o campo de cupom são
-  zerados.
+- "Gerar resumo da simulação" abre o modal com itens, subtotal, desconto, frete,
+  total, modalidade e observações.
+- "Copiar resumo" usa a área de transferência; se o navegador negar, o resumo
+  aparece no modal para ser copiado manualmente.
+- Nenhum pedido é enviado e nenhum pagamento é feito.
 
 ### 3.7 Modal de detalhes
 
@@ -104,12 +107,41 @@ Fecha pelo botão, clicando no fundo escuro ou apertando Esc.
 ### 3.8 Tema escuro
 
 O botão "Tema" liga e desliga a classe `dark` no `body` com `classList.toggle`.
+Sem escolha salva, a página segue o tema do sistema (`prefers-color-scheme`).
 O CSS redefine as variáveis de cor nessa classe, então toda a página muda junto.
 
 ### 3.9 Voltar ao topo
 
 Um botão fixo aparece depois de 300 px de rolagem (evento `scroll`) e leva ao
 início da página com `scrollTo` e rolagem suave.
+
+### 3.10 Busca, ordenação e favoritos
+
+A busca ignora acentos e maiúsculas (`normalize`) e procura no nome e na descrição.
+Busca, categoria, "Somente favoritos" e ordenação (menor preço, maior preço, A–Z)
+se combinam em `listaFiltrada()`. O botão de coração usa `aria-pressed`.
+
+### 3.11 Entrega, frete e observações
+
+A modalidade "Entrega local" cobra R$ 6,00, grátis quando o subtotal é de R$ 40
+ou mais (antes do desconto). O cupom `DOCE10` abate 10% só dos produtos. O campo
+de observações tem limite de 300 caracteres e contador.
+
+### 3.12 Persistência
+
+Carrinho, favoritos e tema ficam no `localStorage`, dentro de `try/catch` e com
+validação dos dados lidos (ids existentes, quantidades de 1 a 99). Se o
+armazenamento estiver bloqueado, a página continua funcionando em memória.
+
+### 3.13 Menu para celular
+
+Em telas até 767 px, o botão "Menu" abre e fecha os links (`hidden` e
+`aria-expanded`). Em telas maiores, o menu fica sempre visível.
+
+### 3.14 Seções de conteúdo
+
+Sobre (números calculados pelo JS), destaques, passos do pedido, experiências,
+processo, guia de sabores, ocasiões, depoimentos, horários, FAQ e contato.
 
 ---
 
@@ -130,11 +162,15 @@ início da página com `scrollTo` e rolagem suave.
 | Arrow functions          | listeners de eventos e callbacks de `filter`/`find`             |
 | Arrays                   | `push`, `includes`, `find`, `filter`, `forEach`                 |
 | Objetos                  | cada sabor tem `id`, `nome`, `categoria`, `preco`, `desc`       |
-| Template strings         | cartões, itens do pedido e mensagens                            |
+| Template strings         | contagem de resultados e resumo do pedido                            |
 | DOM: seleção             | `getElementById`                                                |
-| DOM: alteração           | `textContent`, `innerHTML`, `classList`, `style`                |
-| DOM: criação             | `createElement`, `appendChild`, `setAttribute`                  |
+| DOM: alteração           | `textContent`, `replaceChildren`, `classList`, `style`, `hidden`                |
+| DOM: criação             | `createElement`, `append`, `setAttribute`                  |
 | Eventos                  | `click`, `keydown`, `scroll` com `addEventListener`             |
+| Métodos de array         | `reduce` (totais), `sort` (ordenação), `some`, `map`            |
+| `Set`                    | categorias únicas e favoritos sem repetição                     |
+| Tratamento de erros      | `try/catch` ao ler e gravar no `localStorage`                   |
+| `matchMedia`             | tela pequena, menos movimento e tema do sistema                 |
 
 ---
 
@@ -146,10 +182,11 @@ Cada sabor é um objeto:
 { id: 4, nome: "Limão siciliano", categoria: "Frutas", preco: 11, desc: "..." }
 ```
 
-O estado da página fica em três variáveis:
+O estado da página fica em quatro variáveis:
 
 - `carrinho`: array de `{ id, qtd }`. Guarda só o id e a quantidade; nome e preço
   são buscados em `sabores`, para que o dado exista em um único lugar.
+- `favoritos`: array com os ids dos sabores salvos.
 - `desconto`: número entre 0 e 1 (0.1 equivale a 10%).
 - `filtroAtual`: categoria selecionada.
 
@@ -182,7 +219,7 @@ tela afetada. Isso evita ter que atualizar elementos um a um.
   tema escuro só redefine esses valores.
 - **Layout:** `grid` com `auto-fill` faz o cardápio se ajustar à largura da tela
   sem depender de muitas regras de media query.
-- **Largura do conteúdo:** limitada a 900 px, para manter as linhas de texto
+- **Largura do conteúdo:** limitada (de 900 a 1500 px, conforme a tela), para manter as linhas de texto
   curtas e fáceis de ler.
 
 ---
@@ -220,7 +257,10 @@ Recursos adicionais:
 - `aria-label` nos botões que só têm símbolo (voltar ao topo, remover item).
 - `aria-live` no título digitado, para leitores de tela perceberem o texto.
 - O modal usa `role="dialog"` e fecha com Esc.
-- Contraste alto entre texto e fundo nos dois temas.
+- Contraste revisado nos dois temas, inclusive nas cores de sucesso e erro.
+- Link "Pular para o conteúdo" para quem navega pelo teclado.
+- Com o modal aberto, o resto da página fica inerte e o foco volta ao botão de origem.
+- Filtros e favoritos informam o estado com `aria-pressed`.
 
 ---
 
@@ -239,6 +279,13 @@ Recursos adicionais:
 | Abrir "Detalhes" e apertar Esc     | Modal fecha                     |
 | Rolar a página mais de 300 px      | Botão de topo aparece           |
 | Clicar em "Tema"                   | Cores da página invertem        |
+| Buscar "limao" (sem acento)        | Aparece "Limão siciliano"       |
+| Ordenar por menor preço            | Lista em ordem crescente        |
+| Favoritar e recarregar a página    | Favorito continua salvo         |
+| Entrega com subtotal abaixo de R$ 40 | Frete de R$ 6,00             |
+| Entrega com subtotal de R$ 40+     | Frete grátis                    |
+| Gerar resumo com itens no carrinho | Modal com o resumo              |
+| Reduzir a janela abaixo de 768 px  | Aparece o botão "Menu"          |
 
 ---
 
@@ -261,9 +308,8 @@ Troque a URL pelo endereço do repositório criado no GitHub.
 
 ## 11. Melhorias futuras
 
-- Guardar o carrinho no `localStorage` para não perder o pedido ao recarregar.
 - Campo de observações em cada sabor (sem lactose, sem açúcar).
 - Escolha de tamanho (copinho, pote) com preços diferentes.
 - Seção de contato com validação de formulário.
 - Galeria de fotos dos sabores.
-- Lembrar o tema escolhido entre visitas.
+- Formulário de contato com validação.
