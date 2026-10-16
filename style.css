@@ -1,10 +1,10 @@
 /* ===== Cores: variáveis do tema claro ===== */
 :root {
-  --fundo: #f1faf5;
+  --fundo: #ffdddd;
   --texto: #2b1b3d;
-  --card: #ffffff;
-  --rosa: #ff5c8a;
-  --limao: #ffe66d;
+  --card: #fff4de;
+  --rosa: #e11a45;
+  --limao: #edc92c;
   --borda: #2b1b3d;
 }
 /* Tema escuro: o JS liga a classe "dark" no body */
