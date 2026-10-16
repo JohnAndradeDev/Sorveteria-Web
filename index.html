@@ -5,53 +5,515 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Gelato Rua 9: sorvetes artesanais</title>
-  <!-- CSS externo -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <!-- Cabeçalho com logo, atalho para o pedido e botão de tema -->
+  <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
   <header class="topo">
     <a class="logo" href="#">Gelato Rua 9</a>
-    <nav>
+
+    <button id="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" hidden>Menu</button>
+    <nav id="menu-principal" aria-label="Navegação principal">
+      <a href="#sobre">Sobre</a>
       <a href="#cardapio">Cardápio</a>
+      <a href="#depoimentos">Depoimentos</a>
       <a href="#pedido">Meu pedido (<span id="qtd-carrinho">0</span>)</a>
       <button id="toggle-dark" type="button">Tema</button>
     </nav>
   </header>
 
-  <main>
-    <!-- Hero: a frase é digitada pelo script (efeito typewriter) -->
+  <main id="conteudo">
     <section class="hero">
-      <h1 id="typewriter" aria-live="polite"></h1>
+      <h1 id="typewriter">Sorvete bom é sorvete de verdade.</h1>
       <p>Sorvetes feitos todo dia, em pequenos lotes. Monte seu pedido abaixo.</p>
+
+      <div class="hero-acoes">
+        <a class="botao" href="#cardapio">Ver cardápio</a>
+        <a class="botao botao-secundario" href="#pedido">Montar pedido</a>
+      </div>
+
+      <ul class="hero-diferenciais">
+        <li>🍦 Feito diariamente</li>
+        <li>🌿 Opções sem lactose</li>
+        <li>🚚 Retirada e entrega local</li>
+      </ul>
     </section>
 
-    <!-- Cardápio: os botões de filtro e os cartões são criados pelo JS -->
+    <section id="sobre" class="sobre">
+      <h2>Sobre a Gelato Rua 9</h2>
+
+      <div class="sobre-conteudo">
+        <p>
+          A <strong>Gelato Rua 9</strong> nasceu da ideia de transformar ingredientes simples
+          em sorvetes cremosos, frescos e cheios de sabor. Trabalhamos com pequenos lotes,
+          priorizando frutas da estação, leite de qualidade e receitas artesanais.
+        </p>
+
+        <p>
+          Nosso objetivo é oferecer uma experiência acolhedora: você escolhe o sabor,
+          monta seu pedido e acompanha o total antes de finalizar. Também temos opções
+          para quem prefere versões sem lactose ou com menos açúcar.
+        </p>
+      </div>
+
+      <div class="sobre-numeros">
+        <div>
+          <strong>12</strong>
+          <span>sabores no cardápio</span>
+        </div>
+        <div>
+          <strong>100%</strong>
+          <span>produção artesanal</span>
+        </div>
+        <div>
+          <strong>3</strong>
+          <span>categorias de sabores</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="destaques" class="destaques">
+      <h2>Destaques da semana</h2>
+
+      <div class="grade destaques-grade">
+        <article class="destaque">
+          <h3>Pistache Cremoso</h3>
+          <p>Base italiana cremosa com pasta de pistache e pedaços crocantes.</p>
+          <span class="tag">Mais pedido</span>
+        </article>
+
+        <article class="destaque">
+          <h3>Doce de Leite</h3>
+          <p>Doce de leite artesanal com calda caramelizada.</p>
+          <span class="tag">Clássico</span>
+        </article>
+
+        <article class="destaque">
+          <h3>Manga com gengibre</h3>
+          <p>Manga madura com um toque de gengibre.</p>
+          <span class="tag">Sem lactose</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="como-funciona" class="secao-editorial" aria-labelledby="titulo-como-funciona">
+      <h2 id="titulo-como-funciona">Seu pedido em quatro passos</h2>
+      <p>Explore o cardápio e monte uma combinação do seu jeito.</p>
+      <div class="grade">
+        <article class="painel">
+          <span class="icone" aria-hidden="true">1</span>
+          <h3>Descubra os sabores</h3>
+          <p>
+            Busque pelo nome ou explore as categorias Cremosos, Frutas e Especiais.
+          </p>
+          <p class="nota">Use os favoritos para guardar ideias.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">2</span>
+          <h3>Monte seu carrinho</h3>
+          <p>
+            Adicione uma ou mais unidades e ajuste as quantidades no pedido.
+          </p>
+          <p class="nota">Os preços são por unidade demonstrativa.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">3</span>
+          <h3>Escolha a modalidade</h3>
+          <p>
+            Compare retirada e entrega e acompanhe o frete no resumo.
+          </p>
+          <p class="nota">O cálculo usa as regras desta demonstração.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">4</span>
+          <h3>Confira o resumo</h3>
+          <p>
+            Gere uma prévia com itens, quantidades, desconto e total.
+          </p>
+          <p class="nota">Nenhum pedido real é enviado.</p>
+        </article>
+      </div>
+    </section>
+
     <section id="cardapio">
       <h2>Cardápio</h2>
+      <p class="descricao-secao">
+        Escolha entre cremes artesanais, sorbets de fruta e opções especiais.
+        Use os filtros para encontrar rapidamente o sabor ideal.
+      </p>
+
+      <div class="ferramentas-cardapio">
+        <div class="campo">
+          <label for="busca">Buscar um sabor</label>
+          <input id="busca" type="search" placeholder="Ex.: chocolate" autocomplete="off">
+        </div>
+        <div class="campo">
+          <label for="ordenacao">Ordenar por</label>
+          <select id="ordenacao">
+            <option value="padrao">Ordem do cardápio</option>
+            <option value="menor">Menor preço</option>
+            <option value="maior">Maior preço</option>
+            <option value="nome">Nome A–Z</option>
+          </select>
+        </div>
+        <label class="checkbox"><input id="so-favoritos" type="checkbox"> Somente favoritos</label>
+      </div>
+      <p id="resultado-busca" role="status"></p>
+      <noscript>Ative o JavaScript para consultar sabores e simular o pedido.</noscript>
       <div id="filtros" class="filtros"></div>
       <div id="lista-sabores" class="grade"></div>
     </section>
 
-    <!-- Pedido: itens, cupom e total -->
+    <section id="experiencias" class="secao-editorial" aria-labelledby="titulo-experiencias">
+      <h2 id="titulo-experiencias">Uma pausa para cada momento</h2>
+      <p>Ideias para aproveitar sabores diferentes, sem alterar seu pedido automaticamente.</p>
+      <div class="grade">
+        <article class="painel">
+          <span class="icone" aria-hidden="true">☀</span>
+          <h3>Pausa da tarde</h3>
+          <p>
+            Combine o sabor de café com uma conversa sem pressa.
+          </p>
+          <p class="nota">Sugestão: café com canela.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🍋</span>
+          <h3>Dia de sol</h3>
+          <p>
+            Explore notas cítricas e frutadas para variar sua escolha.
+          </p>
+          <p class="nota">Sugestão: limão siciliano.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🍫</span>
+          <h3>Momento chocolate</h3>
+          <p>
+            Experimente a descrição de cacau intenso no cardápio.
+          </p>
+          <p class="nota">Sugestão: chocolate 70%.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🍪</span>
+          <h3>Sessão de filme</h3>
+          <p>
+            Escolha uma opção de cookies e monte seu carrinho.
+          </p>
+          <p class="nota">Sugestão: cookies e creme.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="processo" class="secao-editorial" aria-labelledby="titulo-processo">
+      <h2 id="titulo-processo">Da ideia à vitrine</h2>
+      <p>Uma história ilustrativa de como seria nossa produção artesanal.</p>
+      <div class="grade">
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🌱</span>
+          <h3>Escolha de ingredientes</h3>
+          <p>
+            A proposta da marca valoriza receitas simples e combinações sazonais.
+          </p>
+          <p class="nota">Conteúdo conceitual do projeto.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🥣</span>
+          <h3>Teste das receitas</h3>
+          <p>
+            Cada combinação começa com uma ideia de sabor e textura.
+          </p>
+          <p class="nota">As descrições não são fichas técnicas.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🍦</span>
+          <h3>Pequenos lotes</h3>
+          <p>
+            A identidade da gelateria foi pensada em torno de produção artesanal.
+          </p>
+          <p class="nota">Operação fictícia para demonstração.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">♡</span>
+          <h3>Cuidado no atendimento</h3>
+          <p>
+            Informações claras ajudam a escolher e revisar o pedido.
+          </p>
+          <p class="nota">Confirme restrições com uma loja real.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="guia" class="secao-editorial" aria-labelledby="titulo-guia">
+      <h2 id="titulo-guia">Guia para escolher seu sabor</h2>
+      <p>Compare os perfis apresentados no cardápio.</p>
+      <div class="grade">
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🥛</span>
+          <h3>Cremosos</h3>
+          <p>
+            Pistache, doce de leite e chocolate fazem parte desta categoria.
+          </p>
+          <p class="nota">Confira os ingredientes antes de consumir.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🍓</span>
+          <h3>Frutas</h3>
+          <p>
+            Limão, manga e morango trazem propostas diferentes de sabor.
+          </p>
+          <p class="nota">Categoria de fruta não significa ausência de leite.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">✨</span>
+          <h3>Especiais</h3>
+          <p>
+            Cookies, café e outras combinações completam a seleção.
+          </p>
+          <p class="nota">Algumas receitas ilustrativas contêm glúten.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">♥</span>
+          <h3>Seus favoritos</h3>
+          <p>
+            Marque o coração nos cartões e filtre apenas o que você salvou.
+          </p>
+          <p class="nota">Preferências ficam neste navegador.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="ocasioes" class="secao-editorial" aria-labelledby="titulo-ocasioes">
+      <h2 id="titulo-ocasioes">Ideias para compartilhar</h2>
+      <p>Inspirações para uma futura operação real da gelateria.</p>
+      <div class="grade">
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🎂</span>
+          <h3>Aniversários</h3>
+          <p>
+            Uma mesa de sabores pode fazer parte de uma comemoração.
+          </p>
+          <p class="nota">Encomendas não estão disponíveis neste site.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🏡</span>
+          <h3>Encontro em casa</h3>
+          <p>
+            Use o carrinho para comparar combinações para diferentes pessoas.
+          </p>
+          <p class="nota">A simulação não reserva produtos.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🎁</span>
+          <h3>Presente criativo</h3>
+          <p>
+            Monte uma seleção e copie o resumo para guardar a ideia.
+          </p>
+          <p class="nota">Não há vale-presente à venda.</p>
+        </article>
+        <article class="painel">
+          <span class="icone" aria-hidden="true">🏢</span>
+          <h3>Eventos de equipe</h3>
+          <p>
+            Planeje uma seleção variada e revise as quantidades.
+          </p>
+          <p class="nota">Valores e estoque são demonstrativos.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="depoimentos" class="depoimentos">
+      <h2>Depoimentos ilustrativos</h2>
+      <p>Textos fictícios para demonstrar a apresentação de avaliações.</p>
+
+      <div class="grade depoimentos-grade">
+        <blockquote class="depoimento">
+          <p>“O pistache é incrível! Cremoso, sem exagerar no doce e com pedaços de verdade.”</p>
+          <footer>— Mariana S.</footer>
+        </blockquote>
+
+        <blockquote class="depoimento">
+          <p>“Peço sempre o de manga com gengibre. Refrescante e perfeito para os dias quentes.”</p>
+          <footer>— Lucas P.</footer>
+        </blockquote>
+
+        <blockquote class="depoimento">
+          <p>“Gostei muito de poder montar o pedido pelo site e ver o total antes de finalizar.”</p>
+          <footer>— Beatriz A.</footer>
+        </blockquote>
+      </div>
+    </section>
+
     <section id="pedido" class="pedido">
       <h2>Meu pedido</h2>
+
+      <p>Simule seu pedido. Os dados ficam apenas neste navegador.</p>
       <ul id="itens-pedido"></ul>
+      <button id="limpar-carrinho" type="button">Esvaziar carrinho</button>
+      <fieldset>
+        <legend>Como deseja receber?</legend>
+        <label for="recebimento">Modalidade</label>
+        <select id="recebimento">
+          <option value="retirada">Retirada — grátis</option>
+          <option value="entrega">Entrega local — R$ 6,00</option>
+        </select>
+        <p>Na simulação, o frete é grátis para subtotal a partir de R$ 40.</p>
+      </fieldset>
+      <div class="campo">
+        <label for="observacoes">Observações do pedido</label>
+        <textarea id="observacoes" rows="3" maxlength="300" placeholder="Ex.: separar os sabores"></textarea>
+        <small id="contador-observacoes">0/300 caracteres</small>
+      </div>
+      <dl class="resumo-valores">
+        <div>
+          <dt>Subtotal</dt>
+          <dd id="subtotal">R$ 0,00</dd>
+        </div>
+        <div>
+          <dt>Desconto</dt>
+          <dd id="valor-desconto">R$ 0,00</dd>
+        </div>
+        <div>
+          <dt>Entrega</dt>
+          <dd id="valor-frete">R$ 0,00</dd>
+        </div>
+      </dl>
+
       <label for="cupom">Cupom de desconto</label>
+
       <div class="linha">
         <input id="cupom" type="text" placeholder="Ex.: DOCE10">
         <button id="aplicar-cupom" type="button">Aplicar</button>
       </div>
-      <p id="msg-cupom"></p>
-      <p class="total">Total: <strong id="total">R$ 0,00</strong></p>
-      <button id="finalizar" type="button">Finalizar pedido</button>
+
+      <p id="msg-cupom" role="status"></p>
+
+      <p class="total">
+        Total: <strong id="total">R$ 0,00</strong>
+      </p>
+
+      <button id="finalizar" type="button">Gerar resumo da simulação</button>
+      <button id="copiar-pedido" type="button">Copiar resumo</button>
+    </section>
+
+    <section id="informacoes" class="informacoes">
+      <h2>Horários e localização</h2>
+
+      <div class="grade info-grade">
+        <div class="info-card">
+          <h3>🕒 Horário</h3>
+          <p>Terça a domingo<br>14h às 21h</p>
+          <p><strong>Segunda:</strong> fechado</p>
+        </div>
+
+        <div class="info-card">
+          <h3>📍 Endereço</h3>
+          <p>Endereço fictício: Rua Nove, 123<br>Sertãozinho — SP</p>
+          <p>Retirada no balcão e entrega na região.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>💳 Pagamento</h3>
+          <p>Pix, cartão de crédito e dinheiro.</p>
+          <p>Na simulação: entrega grátis a partir de R$ 40 de subtotal.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="faq">
+      <h2>Perguntas frequentes</h2>
+
+      <details>
+        <summary>Vocês têm opções sem lactose?</summary>
+        <p>Consulte os detalhes de cada sabor. As receitas deste exemplo são ilustrativas; em uma loja real, confirme ingredientes e risco de contato cruzado com a equipe.</p>
+      </details>
+
+      <details>
+        <summary>Posso retirar meu pedido na loja?</summary>
+        <p>Sim. Após finalizar o pedido, você pode retirar no balcão durante o horário de funcionamento.</p>
+      </details>
+
+      <details>
+        <summary>Os sabores mudam com frequência?</summary>
+        <p>Sim. Trabalhamos com ingredientes da estação, então alguns sabores são sazonais e podem mudar semanalmente.</p>
+      </details>
+
+      <details>
+        <summary>Como funciona o cupom de desconto?</summary>
+        <p>Digite o cupom no campo “Cupom de desconto” e clique em Aplicar. O desconto válido será aplicado ao total do pedido.</p>
+      </details>
+
+      <details>
+        <summary>O pedido é realmente enviado?</summary>
+        <p>
+          Não. Este projeto funciona como uma simulação local, sem conexão com uma loja ou serviço de pagamento.
+        </p>
+      </details>
+      <details>
+        <summary>Meus favoritos são salvos?</summary>
+        <p>
+          Quando o navegador permite armazenamento local, os favoritos continuam disponíveis no mesmo navegador.
+        </p>
+      </details>
+      <details>
+        <summary>O carrinho continua ao recarregar?</summary>
+        <p>
+          Sim, quando o armazenamento local está disponível. Limpar os dados do navegador remove o carrinho salvo.
+        </p>
+      </details>
+      <details>
+        <summary>Como funciona o frete?</summary>
+        <p>
+          A retirada é gratuita. A entrega demonstrativa custa R$ 6,00 e fica grátis com subtotal de R$ 40 ou mais, antes do desconto.
+        </p>
+      </details>
+      <details>
+        <summary>Posso usar vários cupons?</summary>
+        <p>
+          Não. O exemplo aceita o cupom DOCE10, que aplica 10% ao subtotal dos produtos, sem desconto no frete.
+        </p>
+      </details>
+      <details>
+        <summary>O tema escuro muda as cores da marca?</summary>
+        <p>
+          O botão alterna entre as duas paletas que já existiam no projeto. A preferência é salva localmente.
+        </p>
+      </details>
+      <details>
+        <summary>Os dados de contato são reais?</summary>
+        <p>
+          Não. Endereço e canais são placeholders e precisam ser substituídos antes da publicação de uma loja real.
+        </p>
+      </details>
+      <details>
+        <summary>O site recebe informações pessoais?</summary>
+        <p>
+          Não há envio de dados nesta versão. Não inclua informações pessoais nas observações do pedido.
+        </p>
+      </details>
+    </section>
+    <section id="contato" class="contato">
+      <h2>Fale com a gente</h2>
+
+      <p>
+        Tem alguma dúvida, sugestão de sabor ou quer encomendar para uma festa?
+        Envie uma mensagem pelo WhatsApp ou siga a Gelato Rua 9 nas redes sociais.
+      </p>
+
+      <p>Contatos de exemplo: substitua pelos canais reais antes de publicar.</p>
+      <div class="contato-acoes">
+        <a class="botao" href="#" target="_blank" rel="noopener">
+          WhatsApp
+        </a>
+
+        <a class="botao botao-secundario" href="#" target="_blank" rel="noopener">
+          Instagram
+        </a>
+      </div>
     </section>
   </main>
 
-  <!-- Modal de detalhes (preenchido pelo JS) -->
-  <div id="modal" class="modal">
-    <div class="modal-caixa" role="dialog" aria-modal="true">
+  <div id="modal" class="modal" hidden>
+    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-texto" tabindex="-1">
       <h3 id="modal-titulo"></h3>
       <p id="modal-texto"></p>
       <button id="fechar-modal" type="button">Fechar</button>
@@ -59,11 +521,13 @@
   </div>
 
   <button id="topo-btn" type="button" aria-label="Voltar ao topo">↑</button>
+
   <footer>
-    <p>Gelato Rua 9. Site de exemplo.</p>
+    <p>Gelato Rua 9.</p>
+    <p>Feito com carinho em Sertãozinho, SP.</p>
   </footer>
 
-  <!-- JS externo no fim do body -->
+  <div id="notificacao" class="notificacao" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
 
