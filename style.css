@@ -7,6 +7,7 @@
   --limao: #edc92c;
   --borda: #2b1b3d;
 }
+
 /* Tema escuro: o JS liga a classe "dark" no body */
 body.dark {
   --fundo: #1f1430;
@@ -237,5 +238,232 @@ footer {
   .topo {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+/* ============================================================
+   RESPONSIVIDADE (abordagem: base fluida + ajustes por faixa)
+   ============================================================ */
+
+/* ---------- Base fluida: vale para qualquer tela ---------- */
+html {
+  -webkit-text-size-adjust: 100%; /* impede o celular de aumentar o texto sozinho */
+  scroll-padding-top: 5rem; /* links âncora não ficam escondidos atrás do cabeçalho */
+}
+body {
+  overflow-x: hidden; /* nunca rola para os lados */
+  /* Tamanho do texto cresce suavemente com a largura da tela */
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.2rem);
+}
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Margens laterais fluidas + respeito ao "notch" do celular */
+.topo {
+  padding-left: max(1.25rem, env(safe-area-inset-left));
+  padding-right: max(1.25rem, env(safe-area-inset-right));
+}
+main {
+  width: 100%;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+footer {
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+#topo-btn {
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+/* minmax(min(100%, X)) evita estouro em telas menores que X */
+.grade {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+}
+
+/* Modal nunca passa da altura da tela; rola por dentro se precisar */
+.modal-caixa {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Títulos longos quebram em vez de estourar a tela */
+h1,
+h2,
+h3,
+.sabor,
+#itens-pedido li {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Telas sensíveis ao toque: alvos de pelo menos 44 px ---------- */
+@media (pointer: coarse) {
+  button,
+  input {
+    min-height: 44px;
+  }
+  #topo-btn {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+}
+
+/* ---------- Mouse: efeito de hover só onde existe hover ---------- */
+@media (hover: none) {
+  button:hover {
+    background: var(--card);
+    color: var(--texto);
+  }
+  .filtros button.ativo:hover {
+    background: var(--rosa);
+    color: #fff;
+  }
+}
+
+/* ---------- Celulares pequenos (até 360 px) ---------- */
+@media (max-width: 360px) {
+  .topo {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+  .logo {
+    font-size: 1.1rem;
+  }
+  .topo nav {
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .hero {
+    padding: 1.5rem 0 1rem;
+    min-height: 14rem;
+  }
+  h2 {
+    font-size: 1.35rem;
+  }
+  .pedido {
+    padding: 0.9rem;
+  }
+}
+
+/* ---------- Celulares (até 480 px) ---------- */
+@media (max-width: 480px) {
+  .topo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .topo nav {
+    justify-content: space-between;
+  }
+  .grade {
+    grid-template-columns: 1fr;
+  } /* uma coluna */
+  .sabor .acoes button {
+    flex: 1;
+  } /* botões ocupam a largura */
+  .linha {
+    flex-direction: column;
+  } /* cupom: campo e botão empilhados */
+  #itens-pedido li {
+    flex-wrap: wrap;
+  }
+  #finalizar {
+    width: 100%;
+  }
+}
+
+/* ---------- Celulares grandes e tablets pequenos (481 a 767 px) ---------- */
+@media (min-width: 481px) and (max-width: 767px) {
+  .grade {
+    grid-template-columns: repeat(2, 1fr);
+  } /* duas colunas */
+}
+
+/* ---------- Tablets (768 a 1023 px) ---------- */
+@media (min-width: 768px) {
+  .hero {
+    min-height: 20rem;
+    padding-top: 4rem;
+  }
+  .grade {
+    gap: 1.25rem;
+  }
+  .pedido {
+    padding: 1.75rem;
+  }
+}
+
+/* ---------- Notebooks (1024 px ou mais) ---------- */
+@media (min-width: 1024px) {
+  main {
+    max-width: 1100px;
+  }
+  .grade {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  .hero p {
+    font-size: 1.25rem;
+  }
+}
+
+/* ---------- Desktops grandes e telas full HD (1440 px ou mais) ---------- */
+@media (min-width: 1440px) {
+  main {
+    max-width: 1280px;
+  }
+  .grade {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .sabor {
+    padding: 1.25rem;
+  }
+}
+
+/* ---------- Ultrawide / 4K (1920 px ou mais) ---------- */
+@media (min-width: 1920px) {
+  html {
+    font-size: 112.5%;
+  } /* escala tudo que usa rem */
+  main {
+    max-width: 1500px;
+  }
+}
+
+/* ---------- Celular deitado (pouca altura) ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .topo {
+    position: static;
+  } /* cabeçalho não come a tela */
+  .hero {
+    min-height: auto;
+    padding: 1.5rem 0;
+  }
+  .modal-caixa {
+    max-height: 85vh;
+  }
+}
+
+/* ---------- Quem prefere menos movimento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Impressão: só o conteúdo, sem botões nem menu ---------- */
+@media print {
+  .topo,
+  #topo-btn,
+  .modal,
+  .filtros,
+  .acoes,
+  #finalizar {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
   }
 }

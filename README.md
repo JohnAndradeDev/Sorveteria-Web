@@ -187,6 +187,33 @@ tela afetada. Isso evita ter que atualizar elementos um a um.
 
 ---
 
+## 7.1 Responsividade
+
+O site se adapta a celulares, tablets, notebooks e telas grandes.
+
+| Faixa           | Comportamento                                              |
+| --------------- | ---------------------------------------------------------- |
+| Até 360 px      | Espaçamentos reduzidos, títulos menores                    |
+| Até 480 px      | Cabeçalho em coluna, cardápio em 1 coluna, cupom empilhado |
+| 481 a 767 px    | Cardápio em 2 colunas                                      |
+| 768 px ou mais  | Mais espaço no topo e no pedido                            |
+| 1024 px ou mais | Conteúdo até 1100 px, colunas automáticas                  |
+| 1440 px ou mais | Conteúdo até 1280 px, cardápio em 4 colunas                |
+| 1920 px ou mais | Texto levemente maior e conteúdo até 1500 px               |
+
+Recursos adicionais:
+
+- Tamanho de texto fluido com `clamp()`.
+- Grade com `minmax(min(100%, X), 1fr)`, que nunca estoura em telas estreitas.
+- Alvos de toque de pelo menos 44 px em telas touch (`pointer: coarse`).
+- Áreas seguras de celulares com notch (`env(safe-area-inset-*)`).
+- Celular deitado: cabeçalho deixa de ser fixo para sobrar espaço.
+- Modal com rolagem interna em telas baixas.
+- Estilos de impressão sem menu nem botões.
+- Respeita `prefers-reduced-motion`.
+
+---
+
 ## 8. Acessibilidade
 
 - Foco visível nos botões e campos, para quem navega pelo teclado.
